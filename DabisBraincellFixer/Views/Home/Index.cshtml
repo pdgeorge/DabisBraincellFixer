@@ -32,6 +32,6 @@
 </form>
 
 <form asp-action="Skip" method="get" style="display:inline;">
-    <input type="number" name="id" value="@Model.Id" />
+    <input type="number" name="id" value="@(Model.Id + 1)" />
     <button type="submit">Skip</button>
 </form>
