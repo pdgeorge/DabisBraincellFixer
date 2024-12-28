@@ -1,0 +1,37 @@
+﻿@model List<DabisBraincellFixer.Models.Comm>
+
+@{
+    ViewData["Title"] = "View Comms";
+}
+
+<h1>View Comms</h1>
+
+<form method="get" asp-action="ViewRecords">
+    <div>
+        <label for="searchUsername">Search by Username:</label>
+        <input type="text" id="searchUsername" name="searchUsername" value="@ViewData["searchUsername"]" />
+        <button type="submit">Search</button>
+    </div>
+</form>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Message</th>
+            <th>Response</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var record in Model)
+        {
+            <tr>
+                <td>@record.Id</td>
+                <td>@record.Username</td>
+                <td>@record.Message</td>
+                <td>@record.Response</td>
+            </tr>
+        }
+    </tbody>
+</table>

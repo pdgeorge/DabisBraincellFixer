@@ -1,0 +1,70 @@
+# Build results
+bin/
+obj/
+out/
+
+# Rider projects
+.idea/
+*.sln.iml
+
+# User-specific files
+*.user
+*.userosscache
+*.suo
+*.sln.docstates
+
+# Mono Auto Generated Files
+mono_crash.*
+
+# Visual Studio Code files
+.vscode/
+
+# Visual Studio working directory
+.vs/
+
+# Backup & log files
+*.log
+*.tlog
+*.bak
+*.swp
+*.tmp
+*.temp
+*.pid
+*.sdf
+*.ilk
+*.pdb
+
+# Recycle Bin used by the Visual Studio IDE
+$$Recycle.Bin/
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# Package directories (can be reinstalled)
+**/packages/
+*.nupkg
+*.snupkg
+
+# NuGet
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# DotNet Tools
+.dotnet_tools/
+
+# Resharper files
+*.DotSettings.user
+
+# Coverage files
+*.coverage
+*.coveragexml
+
+# Publishing outputs
+.publish/
+
+# Local history for JetBrains IDEs
+.idea/
+
+# IIS Express settings
+/.vs/
