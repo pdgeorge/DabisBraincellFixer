@@ -1,0 +1,39 @@
+﻿@model DabisBraincellFixer.Models.Comm
+
+@{
+    ViewData["Title"] = "DabiBC";
+}
+
+<h1>SQLite CRUD Application</h1>
+
+<form asp-action="Update" method="post">
+    @Html.AntiForgeryToken()
+    <input asp-for="Id" type="hidden" />
+    <div>
+        <label for="id">ID:</label>
+        <input type="number" id="id" name="Id" value="@Model.Id" readonly />
+    </div>
+    <div>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="Username" value="@Model.Username" />
+    </div>
+    <div>
+        <label for="message">Message:</label>
+        <textarea id="message" name="Message">@Model.Message</textarea>
+    </div>
+    <div>
+        <label for="response">Response:</label>
+        <textarea id="response" name="Response">@Model.Response</textarea>
+    </div>
+    <button type="submit">Update</button>
+</form>
+
+<form asp-route-id="@Model.Id" asp-action="Delete" method="post" style="display:inline;">
+    @Html.AntiForgeryToken()
+    <button type="submit">Delete</button>
+</form>
+
+<form asp-action="Skip" method="get" style="display:inline;">
+    <input type="number" name="id" value="@(Model.Id + 1)" />
+    <button type="submit">Skip</button>
+</form>

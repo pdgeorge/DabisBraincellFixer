@@ -4,34 +4,36 @@
     ViewData["Title"] = "Home";
 }
 
-<h1>SQLite CRUD Application</h1>
+<h2>Trigger Event</h2>
 
-<form asp-action="Update" method="post">
-    <div>
-        <label for="id">ID:</label>
-        <input type="number" id="id" name="Id" value="@Model.Id" readonly />
-    </div>
-    <div>
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="Username" value="@Model.Username" />
-    </div>
-    <div>
-        <label for="message">Message:</label>
-        <textarea id="message" name="Message">@Model.Message</textarea>
-    </div>
-    <div>
-        <label for="response">Response:</label>
-        <textarea id="response" name="Response">@Model.Response</textarea>
-    </div>
-    <button type="submit">Update</button>
-</form>
+<div>
+    <label for="actionInput">Action:</label>
+    <input id="actionInput" type="text" placeholder="Enter action..." />
+    <button id="sendBtn">Send</button>
+</div>
 
-<form asp-action="Delete" method="post" style="display:inline;">
-    <input type="hidden" name="id" value="@Model.Id" />
-    <button type="submit">Delete</button>
-</form>
+<div id="result" style="margin-top:1em;color:green;"></div>
 
-<form asp-action="Skip" method="get" style="display:inline;">
-    <input type="number" name="id" value="@(Model.Id + 1)" />
-    <button type="submit">Skip</button>
-</form>
+@section Scripts {
+    <script>
+        document.getElementById('sendBtn').addEventListener('click', async () => {
+            var actionValue = document.getElementById('actionInput').value;
+            try {
+                let resp = await fetch('http://localhost:8000/event', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ msg_msg: actionValue })
+                });
+                
+                if (!resp.ok) throw new Error(resp.status + ' ' + resp.statusText);
+                
+                let text = await resp.text();
+                document.getElementById('result').innerText = 'Success: ' + text;
+            }
+            catch (err) {
+                document.getElementById('result').style.color = 'red';
+                document.getElementById('result').innerText = 'Error: ' + err;
+            }
+        });
+    </script>
+}

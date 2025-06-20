@@ -12,7 +12,7 @@ COPY dabibraincell.db /app/dabibraincell.db
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
 WORKDIR /app
 COPY --from=build /publish .
-ENV ASPNETCORE_URLS=http://0.0.0.0:5000
+ENV ASPNETCORE_URLS=http://0.0.0.0:5143
 ENV DATABASE_PATH=/app/dabibraincell.db
-EXPOSE 5000
+EXPOSE 5143
 ENTRYPOINT ["dotnet", "DabisBraincellFixer.dll"]
