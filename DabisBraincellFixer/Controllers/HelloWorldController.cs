@@ -3,7 +3,7 @@
 namespace DabisBraincellFixer.Controllers
 {
     [ApiController]
-    [Route("helloworld")]
+    [Route("Home")]
 public class HelloWorldController : ControllerBase
     {
         private readonly ILogger<HelloWorldController> _logger;
@@ -11,8 +11,9 @@ public class HelloWorldController : ControllerBase
         {
             _logger = logger;
         }
-        [HttpGet]
-        public IActionResult Get()
+        
+        [HttpGet("helloworld")]
+        public IActionResult helloworld()
         {
             return Ok("Hello, world!");
         }

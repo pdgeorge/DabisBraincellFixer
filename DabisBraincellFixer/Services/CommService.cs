@@ -41,6 +41,8 @@ namespace DabisBraincellFixer.Services
 
         public void UpdateRecord(Comm comm)
         {
+            Console.WriteLine("UpdateRecord?");
+            Console.WriteLine(comm.Username);
             if (_dbContext == null) return;
             using var connection = _dbContext.GetConnection();
             connection.Open();
@@ -61,6 +63,8 @@ namespace DabisBraincellFixer.Services
         public void DeleteRecord(int id)
         {
             if (_dbContext == null) return;
+            Console.WriteLine("DeleteRecord?");
+            Console.WriteLine(id);
             using var connection = _dbContext.GetConnection();
             connection.Open();
 
@@ -69,6 +73,7 @@ namespace DabisBraincellFixer.Services
             command.Parameters.AddWithValue("@id", id);
 
             command.ExecuteNonQuery();
+            Console.WriteLine("DeleteRecord complete?");
         }
         public List<Comm> GetAllComms()
         {

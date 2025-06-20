@@ -13,13 +13,17 @@ docker
 
 AWS CDK (later)
 
+## General development
+
+`dotnet run`
+
 ## Docker commands to remember and make use of:
 
 build:
 `docker build --no-cache -t dabisbraincellfixer .`
 
 run
-`docker run -d -p 5000:5000 --name dabisbraincellfixer-container -v ./dabibraincell.db:/app/dabibraincell.db dabisbraincellfixer`
+`docker run -d -p 5143:5143 --name dabisbraincellfixer-container -v ./dabibraincell.db:/app/dabibraincell.db dabisbraincellfixer`
 
 stop and remove all containers
 `docker stop $(docker ps -q) && docker rm $(docker ps -a -q)`
