@@ -7,15 +7,16 @@
 <h2>Trigger Event</h2>
 
 <form id="actionForm" asp-action="Index" method="post">
-    <label for="selectedAction">Action to do:</label>
+    <label for="selectedPersonality">Personality to load:</label>
 
     @Html.DropDownList(
-        "selectedAction",               // name attr & POST parameter
-        Model,                          // SelectList passed in from controller
+        "selectedPersonality",               // name attr & POST parameter
+        Model,                                  // SelectList passed in from controller
         "-- choose action --",
-        new { @class = "form-select", id = "selectedAction" })
+        new { @class = "form-select", id = "selectedPersonality" })
 
     <!-- hidden until “Other…” is picked -->
+    @* Here until I can manually apend "__other" to the end of the list *@
     <input type="text"
            id="customAction"
            placeholder="Enter custom action…"
@@ -37,7 +38,7 @@
 @section Scripts {
 <script>
 (() => {
-    const ddl  = document.getElementById('selectedAction');
+    const ddl  = document.getElementById('selectedPersonality');
     const box  = document.getElementById('customAction');
     const form = document.getElementById('actionForm');
 
@@ -60,13 +61,13 @@
             alert('Please choose or enter an action.');
             return;
         }
-        const payload = "action:" + chosen;
+        const payload = "action:personality:" + chosen;
 
         try {
             const resp = await fetch('http://localhost:8000/event', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ action: payload })
+                body: JSON.stringify({ msg_msg: payload })
             });
 
             if (!resp.ok) throw new Error(resp.status + ' ' + resp.statusText);

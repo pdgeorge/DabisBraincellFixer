@@ -1,0 +1,55 @@
+﻿@model DabisBraincellFixer.Models.Comm
+
+@{
+    ViewData["Title"] = "Home";
+}
+
+<h2>Send a message</h2>
+
+<div>
+    <form id="messageForm" autocomplete="off">
+        <label for="messageInput">Message:</label>
+        <input id="messageInput" type="text" placeholder="Enter message…" />
+        <button id="sendBtn" type="button">Send</button>
+    </form>
+</div>
+
+<div id="result" style="margin-top:1em;color:green;"></div>
+
+@section Scripts {
+    <script>
+        (() => {
+            const form = document.getElementById('messageForm');
+            const input = document.getElementById('messageInput');
+            const btn  = document.getElementById('sendBtn');
+
+            form.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    btn.click();
+                }
+            });
+
+            btn.addEventListener('click', async () => {
+                const messageValue = document.getElementById('messageInput').value;
+                try {
+                    const resp = await fetch('http://localhost:8000/event', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ website: messageValue })
+                    });
+
+                    if (!resp.ok) throw new Error(resp.status + ' ' + resp.statusText);
+
+                    const text = await resp.text();
+                    document.getElementById('result').style.color = 'green';
+                    document.getElementById('result').innerText = 'Success: ' + text;
+                    input.value = '';
+                } catch (err) {
+                    document.getElementById('result').style.color = 'red';
+                    document.getElementById('result').innerText = 'Error: ' + err;
+                }
+            });
+        })();
+    </script>
+}
