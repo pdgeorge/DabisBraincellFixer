@@ -1,0 +1,59 @@
+﻿@{
+    ViewData["Title"] = "React Review";
+}
+
+<h2>Send something for Dabi to review</h2>
+
+<form id="uploadForm" enctype="multipart/form-data" asp-antiforgery="true">
+    <textarea id="msg" name="Message" rows="5" cols="50"
+              placeholder="What should Dabi check out?" class="form-control"></textarea>
+
+    <input id="files"  name="Uploads" type="file" multiple
+           accept="image/*,video/*" class="form-control mt-2" />
+
+    <button id="sendBtn" type="button" class="btn btn-primary mt-2">Send</button>
+</form>
+
+<div id="result" class="mt-3"></div>
+
+@section Scripts {
+<script>
+(() => {
+    const btn   = document.getElementById('sendBtn');
+    const info  = document.getElementById('result');
+
+    btn.addEventListener('click', async () => {
+        const fd = new FormData();                         // auto-sets boundary
+        fd.append('message', document.getElementById('msg').value);
+
+        for (const file of document.getElementById('files').files) {
+            fd.append('uploads', file);                    // must match UploadFile param name
+        }
+
+        // anti-forgery token produced by asp-tag-helper
+        fd.append('__RequestVerificationToken',
+                  document.querySelector('input[name="__RequestVerificationToken"]').value);
+
+
+try {
+    const r = await fetch('http://localhost:8000/review', { method: 'POST', body: fd });
+
+    if (!r.ok) {
+        const errPayload = await r.json().catch(() => ({}));
+        const msg = errPayload.detail ?? `${r.status} ${r.statusText}`;
+        throw new Error(msg);
+    }
+
+    const data = await r.json();
+    info.style.color = 'green';
+    info.textContent = `✅ Uploaded ${data.files.length} file(s)`;
+    document.getElementById('uploadForm').reset();
+
+} catch (err) {
+    info.style.color = 'red';
+    info.textContent = `❌ ${err.message}`;
+}
+    });
+})();
+</script>
+}
